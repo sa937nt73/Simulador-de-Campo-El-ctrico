@@ -1,0 +1,21 @@
+============ COMANDOS QUE PUEDEN AYUDAR ANTE CIERTOS PROBLEMAS
+
+Borro la carpeta build_nmalke y Vuelvo compilar el programa:
+Remove-Item -Recurse -Force build_nmake
+& cmd.exe /c 'call "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" && "C:\Program Files\CMake\bin\cmake.exe" -S . -B build_nmake -G "NMake Makefiles" -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake"'
+
+Para que la terminal "recuerde" dónde están las herramientas de Visual Studio, tenemos que volver a llamarlas en la misma línea justo antes de compilar.
+Copia y pega este comando en tu terminal de VS Code y dale Enter:
+Porque le estamos diciendo: "Primero despierta el entorno de 64 bits (vcvars64.bat) para que la terminal sepa dónde está nmake.exe, y de inmediato compila el proyecto".
+& cmd.exe /c 'call "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" && "C:\Program Files\CMake\bin\cmake.exe" --build build_nmake --config Release'
+
+
+Ejecuto el programa:
+call "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+cmake -S . -B build_nmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake --build build_nmake --config Release
+build_nmake\Simulador.exe
+
+Si te llega a salir el error LINK : fatal error LNK1104: no se puede abrir el archivo 'Simulador.exe', recuerda tu bloc de notas: significa que el simulador se quedó abierto en segundo plano. Solo escribe:
+taskkill /F /IM Simulador.exe
+
